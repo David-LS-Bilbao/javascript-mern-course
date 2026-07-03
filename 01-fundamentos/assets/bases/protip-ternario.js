@@ -28,7 +28,7 @@ const amigosArr = [
     'Tony',
     'Dr. Strange',
     amigo ? 'Thor' : 'Loki',
-    // (()=> 'Nick Fury')()
+    // (()=> 'Nick Fury')()   // funcion anonima autoejecutable
     elMayor(10, 15)
 ];
 /*
