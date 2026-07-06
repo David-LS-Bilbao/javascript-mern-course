@@ -5,10 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blacjack</title>
 
+    <!-- añadir esto -->
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="/02-blackjack/css/styles.css">
 
 </head>
 <body>
+
+  <header class="titulo">
+   Blackjack
+  </header>
+
+
+  <div class="row mt-2"> 
+      <div class="col text-center">
+      
+        <button  class="btn btn-danger">Nuevo Juego</button>
+        <button  class="btn btn-primary">Pedir Carta</button>
+        <button  class="btn btn-primary">Detener</button>
+
+      </div>
+  </div>  
+
+
+  <div class="row container">
+    <div class= col>
+        <h1>Jugador 1 -<small>0</small></h1>
+
+        <div id="Jugador-cartas">
+          <img class="carta"src="02-blackjack/assets/cartas/2C.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+          <img class="carta" src="02-blackjack/assets/cartas/3C.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+          <img class="carta" src="02-blackjack/assets/cartas/5D.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+          <img class="carta"src="02-blackjack/assets/cartas/8H.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+
+        </div>
+    </div>
+
+  </div>
+
+
+
+   <div class="row container">
+    <div class= col>
+        <h1>Computadora -<small>0</small></h1>
+
+        <div id="Computador-cartas">
+          <img class="carta"src="02-blackjack/assets/cartas/2H.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+          <img class="carta" src="02-blackjack/assets/cartas/5H.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+          <img class="carta" src="02-blackjack/assets/cartas/5D.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+          <img class="carta"src="02-blackjack/assets/cartas/7H.png" alt="Queen of Diamonds playing card with red diamonds and a blue border featuring a regal woman in ornate gold and red clothing, exuding elegance and formality">
+
+        </div>
+    </div>
+
+  </div>
 
   <script src="./02-blackjack/juego.js"></script>
   
