@@ -1,5 +1,22 @@
 
 
+// aplicamos el patron modulo.
+// funcion anonima 
+(()=>{
+'use strict';// modo estricto.Se utiliza para evitar problemas con las variables globales
+
+// POodemos incluir aqui todo el codigo que queramos
+//para que no afecte al resto del codigo
+
+
+})();
+
+
+
+
+
+
+
 /*
 * creamos el deck de cartas (la baraja completa)
 */
@@ -180,15 +197,18 @@ btnDetener.addEventListener('click', () => {
 
 const finPartida=()=>{
     if(!turnoJugador && puntosComputadora>puntosJugador){
-        console.log('gana computadora.')
+        console.log('gana computadora.');
+        alert('computadora gana');
             // deshabilitar boton pedir carta
 btnPedir.disabled = true;
     }else if(puntosComputadora===puntosJugador){
         console.log('Habeis empatado');
+        alert('Habeis empatado.')
             // deshabilitar boton pedir carta
 btnPedir.disabled = true;
-    }else {console.log('gana jugador');
-
+    }else {
+        console.log('gana jugador');
+        alert('ugador gana')
     // deshabilitar boton pedir carta
 btnPedir.disabled = true;
 }
@@ -201,6 +221,7 @@ btnNuevo.addEventListener('click', () => {
 const nuevoJuego = () => {
     btnPedir.disabled=false;
     console.log('Nuevo juego');
+    alert('Comienza Nueva Partida.')
     puntosJugador =0;
     puntosComputadora =0;
     turnoJugador = true;
