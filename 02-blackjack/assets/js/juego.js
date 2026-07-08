@@ -183,7 +183,7 @@ const finPartida=()=>{
         console.log('gana computadora.')
             // deshabilitar boton pedir carta
 btnPedir.disabled = true;
-    }else if(puntosComputadora==puntosJugador){
+    }else if(puntosComputadora===puntosJugador){
         console.log('Habeis empatado');
             // deshabilitar boton pedir carta
 btnPedir.disabled = true;
@@ -215,3 +215,4 @@ const nuevoJuego = () => {
     divCartasComputadora.replaceChildren();
 
 }
+//TODO proximo , computadora auto y multijugador y fin juego cuando compu pierde, tambien añadir los mensajes en pantalla.
