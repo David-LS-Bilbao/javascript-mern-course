@@ -1,0 +1,17 @@
+html,body{
+    margin: 0;
+    background-color: rgb(204, 216, 218);
+    color: white;
+    padding: 10px;
+}
+
+
+.titulo{
+    text-align: center;
+    color: rgb(29, 3, 3);
+    background-color: rgb(240, 231, 231);
+    padding: 20px;
+    font-size: 25px;
+}
+
+
