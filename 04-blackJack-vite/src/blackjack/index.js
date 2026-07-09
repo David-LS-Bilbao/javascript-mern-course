@@ -1,8 +1,12 @@
 
 
-import _ from 'underscore';
-import { crearDeck } from './useCases/crear-deck.js';
 import { pedirCarta } from './useCases/pedir-carta.js';
+import { valorCarta } from './useCases/valor-carta.js';
+import { inicializarJuego } from './useCases/inicializar-juego.js';
+import { crearCarta } from './useCases/crear-carta.js';
+//import { acumularPuntos } from './useCases/acumular-puntos.js';
+//import { turnoComputadora } from './useCases/turno-computadora.js';
+//import { determinarGanador } from './useCases/determinar-ganador.js';
 
 
 
@@ -15,7 +19,7 @@ const miModulo = (() => {
 
     let puntosJugadores = [];
 
-    // Referencias del HTML
+    // Optimizacion: se cachean las referencias del DOM una sola vez.
     const btnPedir   = document.querySelector('#btnPedir'),
           btnDetener = document.querySelector('#btnDetener'),
           btnNuevo   = document.querySelector('#btnNuevo');
@@ -24,31 +28,6 @@ const miModulo = (() => {
           puntosHTML = document.querySelectorAll('small');
 
 
-    // Esta función inicializa el juego 
-    const inicializarJuego = ( numJugadores = 2 ) => {
-
-        deck = crearDeck( tipos, especiales );
-
-        puntosJugadores = [];
-        for( let i = 0; i< numJugadores; i++ ) {
-            puntosJugadores.push(0);
-        }
-        
-        puntosHTML.forEach( elem => elem.innerText = 0 );
-        divCartasJugadores.forEach( elem => elem.innerHTML = '' );
-
-        btnPedir.disabled   = false;
-        btnDetener.disabled = false;
-
-    }
-
-
-    const valorCarta = ( carta ) => {
-        const valor = carta.substring(0, carta.length - 1);
-        return ( isNaN( valor ) ) ? 
-                ( valor === 'A' ) ? 11 : 10
-                : valor * 1;
-    }
 
     // Turno: 0 = primer jugador y el último será la computadora
     const acumularPuntos = ( carta, turno ) => {
@@ -57,15 +36,19 @@ const miModulo = (() => {
         return puntosJugadores[turno];
     }
 
+    const reiniciarJuego = () => {
+        deck = inicializarJuego({
+            tipos,
+            especiales,
+            puntosJugadores,
+            puntosHTML,
+            divCartasJugadores,
+            btnPedir,
+            btnDetener,
+        });
+    };
 
-    const crearCarta = ( carta, turno ) => {
-
-        const imgCarta = document.createElement('img');
-        imgCarta.src = `js-blackjack-master/assets/cartas/${ carta }.png`; //3H, JD
-        imgCarta.classList.add('carta');
-        divCartasJugadores[turno].append( imgCarta );
-
-    }
+    reiniciarJuego();
 
     const determinarGanador = () => {
 
@@ -93,7 +76,7 @@ const miModulo = (() => {
         do {
             const carta = pedirCarta(deck);
             puntosComputadora = acumularPuntos(carta, puntosJugadores.length - 1 );
-            crearCarta(carta, puntosJugadores.length - 1 );
+            crearCarta(carta, divCartasJugadores[puntosJugadores.length - 1]);
 
         } while(  (puntosComputadora < puntosMinimos)  && (puntosMinimos <= 21 ) );
 
@@ -108,7 +91,7 @@ const miModulo = (() => {
         const carta = pedirCarta(deck);
         const puntosJugador = acumularPuntos( carta, 0 );
         
-        crearCarta( carta, 0 );
+        crearCarta( carta, divCartasJugadores[0] );
 
 
         if ( puntosJugador > 21 ) {
@@ -134,14 +117,10 @@ const miModulo = (() => {
         turnoComputadora( puntosJugadores[0] );
     });
 
- btnNuevo.addEventListener('click', () => {
-        
-        inicializarJuego();
-
-  });
+    btnNuevo.addEventListener('click', reiniciarJuego);
 
     return {
-        nuevoJuego: inicializarJuego
+        nuevoJuego: reiniciarJuego
     };
 
 })();
