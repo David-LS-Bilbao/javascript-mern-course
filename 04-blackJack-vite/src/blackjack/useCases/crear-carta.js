@@ -1,3 +1,4 @@
+// Crea el elemento visual de una carta y lo agrega al contenedor recibido.
 export const crearCarta = ( carta, contenedorCartas ) => {
     const imgCarta = document.createElement('img');
     imgCarta.src = `js-blackjack-master/assets/cartas/${ carta }.png`; //3H, JD

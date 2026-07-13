@@ -1,5 +1,6 @@
 import { crearDeck } from './crear-deck.js';
 
+// Prepara una nueva partida: crea deck, reinicia puntos, limpia cartas y activa botones.
 export const inicializarJuego = ({
     numJugadores = 2,
     tipos,

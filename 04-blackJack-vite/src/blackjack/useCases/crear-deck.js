@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 
 
-    // Esta función crea un nuevo deck
+    // Genera todas las cartas del deck y usa underscore para mezclarlas.
     const crearDeck = (tiposDeCartas, tiposDeespeciales) => {
 
         let deck = [];

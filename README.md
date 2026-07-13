@@ -38,12 +38,21 @@ Este proyecto no busca ser una aplicacion final de produccion, sino un espacio d
 │       └── classes/
 ├── 02-blackjack/
 │   ├── index.html
+│   ├── assets/
 │   └── css/
+├── 03-modulos-vite/
+│   ├── index.html
+│   └── vite-app/
+├── 04-blackJack-vite/
+│   ├── index.html
+│   ├── src/
+│   └── public/
 └── documents/
-    ├── README.md
     ├── clases/
     ├── fundamentos/
-    └── github/
+    ├── github/
+    ├── patrones/
+    └── vite/
 ```
 
 ---
@@ -124,6 +133,93 @@ Esta seccion sirve para aplicar conceptos de JavaScript en un ejemplo mas practi
 
 ---
 
+## 03-modulos-vite
+
+La carpeta `03-modulos-vite` contiene la introduccion al trabajo con modulos y Vite.
+
+Ubicacion:
+
+```txt
+03-modulos-vite/
+```
+
+Incluye:
+
+- un ejemplo clasico cargado desde `index.html`
+- una app generada con Vite en `vite-app/`
+- ejemplos de imports de JavaScript, CSS e imagenes
+- salida de produccion en `dist/` dentro de `vite-app`
+
+Para ejecutar la app Vite:
+
+```bash
+cd 03-modulos-vite/vite-app
+npm install
+npm run dev
+```
+
+---
+
+## 04-blackJack-vite
+
+La carpeta `04-blackJack-vite` contiene la version del Blackjack migrada a Vite.
+
+Ubicacion:
+
+```txt
+04-blackJack-vite/
+```
+
+Estado actual:
+
+- usa Vite como entorno de desarrollo
+- importa dependencias desde npm, como `underscore`
+- separa la logica del juego en `src/blackjack/useCases/`
+- mantiene `src/blackjack/index.js` como archivo orquestador
+- aplica el patron modulo para encapsular estado y exponer una API minima
+
+Estructura principal:
+
+```txt
+04-blackJack-vite/
+├── index.html
+├── package.json
+├── public/
+└── src/
+    ├── main.js
+    ├── style.css
+    └── blackjack/
+        ├── index.js
+        └── useCases/
+```
+
+Use cases actuales:
+
+- `crear-deck.js`
+- `pedir-carta.js`
+- `valor-carta.js`
+- `inicializar-juego.js`
+- `crear-carta.js`
+- `acumular-puntos.js`
+- `determinar-ganador.js`
+- `turno-computadora.js`
+
+Para ejecutar:
+
+```bash
+cd 04-blackJack-vite
+npm install
+npm run dev
+```
+
+Para verificar build:
+
+```bash
+npm run build
+```
+
+---
+
 ## Documents
 
 La carpeta `documents` contiene apuntes en formato Markdown.
@@ -172,6 +268,31 @@ Apuntes disponibles:
 
 - `comandos-basicos.md`
 
+### Vite
+
+Ubicacion:
+
+```txt
+documents/vite/
+```
+
+Apuntes disponibles:
+
+- `manual-vite.md`
+- `optimizacion-blackjack-vite.md`
+
+### Patrones
+
+Ubicacion:
+
+```txt
+documents/patrones/
+```
+
+Apuntes disponibles:
+
+- `patron-modulo.md`
+
 ---
 
 ## Como usar este proyecto
@@ -217,11 +338,25 @@ En esos casos, se puede cambiar el script activo dentro de:
 01-fundamentos/index.html
 ```
 
+Para proyectos con Vite, entra en la carpeta del proyecto y usa:
+
+```bash
+npm run dev
+```
+
+No abras el `index.html` directamente con doble click si el proyecto usa imports de Vite o dependencias de npm.
+
+Para comprobar que una app Vite compila correctamente:
+
+```bash
+npm run build
+```
+
 ---
 
 ## Estado actual
 
-Este README es una version preliminar.
+El repositorio ya incluye fundamentos, clases, practica clasica de Blackjack, introduccion a Vite y una version de Blackjack refactorizada con Vite.
 
 El proyecto seguira creciendo a medida que se agreguen nuevos ejemplos, ejercicios y apuntes del curso.
 
@@ -229,7 +364,9 @@ Pendientes posibles:
 
 - Completar la documentacion de todos los archivos de `bases`.
 - Completar la documentacion de ciclos.
-- Ampliar la documentacion del proyecto Blackjack.
+- Ampliar la documentacion del proyecto Blackjack clasico.
+- Seguir agregando documentos en `documents/patrones`.
+- Agregar apuntes sobre principios SOLID.
 - Anadir una guia de orden recomendado de estudio.
 - Revisar y unificar estilos de comentarios en todos los ejemplos.
 
