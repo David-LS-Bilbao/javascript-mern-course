@@ -1,15 +1,15 @@
 
 import { Todo } from '../todos/models/todo.model';
 
-// definimos el estado globlal
+// Filtros disponibles para consultar las tareas del store.
 
-const Filters = {
+export const Filters = {
     All: 'all',
     Completed:'completed',
     Pending:'pending'
 }
 
-// definimos el estado
+// Estado global de la aplicacion.
 const state = {
     todos: [
         new Todo('Aprender React'),
@@ -21,68 +21,99 @@ const state = {
     filter: Filters.All,
 }
 
-// funcion para inicializar el store
+// Inicializa el store cargando el estado guardado antes de usar la app.
 const initStore = () => {
-    console.log(state);
+    loadStore();
     console.log('initStore 🥑');
-    
+
 }
 
-// funcion para cargar el store
+// Carga el estado persistido desde localStorage.
 const loadStore = () =>{
-    throw new Error('Not implemented');
+
+    // Si no existe una clave "state" en localStorage, mantiene el estado inicial.
+    if(!localStorage.getItem('state')) return;
+
+    // Lee la clave "state" y copia sus datos al estado global.
+        const{todos = [],filter = Filters.All} = JSON.parse(localStorage.getItem('state'));
+        state.todos = todos;
+        state.filter = filter;
+
 }
 
-// funcion para obtener los ToDos
+// Guarda el estado actual en localStorage para recuperarlo al recargar la pagina.
+const saveStateToLocalStorage = () => {
+    localStorage.setItem('state',JSON.stringify(state));
+}
+
+// Devuelve una copia de las tareas segun el filtro indicado.
 const getTodos = (filter) => {
-    // seleccionamos los ToDos segun el filtro
+    // Selecciona las tareas segun el filtro activo.
 
     switch(filter){
         case Filters.All:
-            return [...state.todos];// copiamos el array todos mediante el operador spread(...) 
+            return [...state.todos];// Copia el array para evitar exponer directamente el estado interno.
         case Filters.Completed:
-            return state.todos.filter(todo => todo.done);// todos que esten completados
+            return state.todos.filter(todo => todo.done);// Tareas completadas.
         case Filters.Pending:
-            return state.todos.filter(todo => !todo.done); // todos que no esten completados
+            return state.todos.filter(todo => !todo.done); // Tareas pendientes.
         default:
-            throw new Error(`Unknown filter: ${filter}`); // si el filtro no es ninguno de los anteriores
+            throw new Error(`Unknown filter: ${filter}`); // Protege contra filtros no definidos.
     }
 }
 
-// funcion para agregar un todo
+// Agrega una nueva tarea al estado y persiste el cambio.
 const addTodo = (description) => {
-    if(!description) throw new Error('Description is required');// si no se le pasa el parametro descripcion lanza un error
+    if(!description) throw new Error('Description is required');// La descripcion es obligatoria.
 
-    state.todos.push(new Todo(description));// si recibe el parametro description agrega el parametro description al array todo
+    state.todos.push(new Todo(description));// Crea una instancia Todo y la agrega al array.
+
+    saveStateToLocalStorage();
 }
 
-// funcion para cambiar el estado de un todo
+// Cambia una tarea entre completada y pendiente y persiste el cambio.
 const toggleTodo = (todoId) => {
     state.todos = state.todos.map( todo => {
-        if(todo.id === todoId) todo.done = !todo.done;// si el id del todo es igual al id del todoId que se quiere cambiar cambia el estado del todo 
+        if(todo.id === todoId) todo.done = !todo.done;// Si coincide el id, invierte su estado done.
         return todo;
     });
+
+    saveStateToLocalStorage();
 }
 
-// funcion para eliminar un todo
+// Elimina una tarea del estado usando su id y persiste el cambio.
 const deleteTodo = (todoId) => {
-    state.todos = state.todos.filter( todo => todo.id !== todoId);// devuelve todos los productos que no sean igual al todoId que se quiere eliminar.
+    state.todos = state.todos.filter( todo => todo.id !== todoId);// Conserva solo las tareas con id diferente.
+
+    saveStateToLocalStorage();
 }
 
-// funcion para cambiar el filtro
+// Elimina todas las tareas completadas del estado y persiste el cambio.
+const deleteCompleted = () => {
+    state.todos = state.todos.filter( todo => !todo.done);// Conserva solo las tareas pendientes.
+
+    saveStateToLocalStorage();
+}
+
+// Actualiza el filtro activo y persiste el cambio.
 const setFilter = (newFilter = Filters.All) => {
-    state.filter =newFilter;// cambia el estado del filtro
+    state.filter =newFilter;// Cambia el filtro guardado en el estado.
+
+    saveStateToLocalStorage();
 }
 
-// funcion para obtener el estado del filtro
+// Devuelve el filtro activo actual.
 const getCurrentFilter = () => {
-    return state.filter;// retorna el estado del filtro
+    return state.filter;// Retorna el filtro guardado en el estado.
 }
 
-// exportamos las funciones
+
+
+// API publica del store.
 export default{
     initStore,
     getTodos,
+    deleteCompleted,
     loadStore,
     addTodo,
     toggleTodo,
