@@ -1,0 +1,22 @@
+
+
+
+/**
+ * 
+ * 
+ * @param {HTMLDivElement} element
+ */
+export const callbacksComponent = (element) => {// element es el div del html
+
+    console.log('callbacks Component');
+
+    // callbacks son funciones que se ejecutan despues de que se ejecute una accion
+
+    
+}   
+
+
+const findHero =(id, callback) => {// el callback es una funcion que se ejecuta despues de que se ejecute la funcion findHero
+    const hero= heroes.find(hero => hero.id === id);// busca el heroe con el id que se pasa como parametro
+    
+}
