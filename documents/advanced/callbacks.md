@@ -385,3 +385,214 @@ ejecutar(() => {
   console.log('Callback ejecutado');
 });
 ```
+## Callbacks Hell
+
+Callback hell aparece cuando se encadenan muchas operaciones dependientes usando callbacks anidados.
+
+El codigo empieza a crecer hacia la derecha y se vuelve dificil de leer, mantener y depurar.
+
+Ejemplo:
+
+```js
+getUser(1, (error, user) => {
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  getPosts(user.id, (error, posts) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    getComments(posts[0].id, (error, comments) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      console.log(comments);
+    });
+  });
+});
+```
+
+En este ejemplo:
+
+1. Primero se obtiene el usuario.
+2. Luego se buscan sus posts.
+3. Luego se buscan los comentarios del primer post.
+
+Cada paso depende del resultado anterior.
+
+## Por que callback hell es un problema
+
+Callback hell puede provocar:
+
+- Codigo dificil de leer.
+- Mucha indentacion.
+- Manejo de errores repetido.
+- Dificultad para reutilizar partes de la logica.
+- Dificultad para saber donde empieza y termina cada bloque.
+- Mayor probabilidad de cometer errores al modificar el codigo.
+
+El problema no es que los callbacks sean malos.
+
+El problema aparece cuando se usan muchos callbacks anidados para controlar flujos complejos.
+
+## Ejemplo visual
+
+Este tipo de estructura:
+
+```js
+paso1(() => {
+  paso2(() => {
+    paso3(() => {
+      paso4(() => {
+        paso5(() => {
+          console.log('Fin');
+        });
+      });
+    });
+  });
+});
+```
+
+se conoce tambien como:
+
+```text
+pyramid of doom
+```
+
+porque el codigo empieza a formar una piramide hacia la derecha.
+
+## Como reducir callback hell
+
+Hay varias formas de mejorarlo.
+
+### 1. Usar retornos tempranos
+
+En vez de envolver todo en `else`, puedes salir pronto si hay error.
+
+Menos claro:
+
+```js
+getUser(1, (error, user) => {
+  if (!error) {
+    getPosts(user.id, (error, posts) => {
+      if (!error) {
+        console.log(posts);
+      }
+    });
+  }
+});
+```
+
+Mas claro:
+
+```js
+getUser(1, (error, user) => {
+  if (error) return console.error(error);
+
+  getPosts(user.id, (error, posts) => {
+    if (error) return console.error(error);
+
+    console.log(posts);
+  });
+});
+```
+
+Esto no elimina el callback hell, pero reduce la complejidad.
+
+### 2. Separar callbacks en funciones con nombre
+
+En lugar de escribir todos los callbacks dentro de otros callbacks, puedes extraer funciones.
+
+```js
+const handleComments = (error, comments) => {
+  if (error) return console.error(error);
+
+  console.log(comments);
+};
+
+const handlePosts = (error, posts) => {
+  if (error) return console.error(error);
+
+  getComments(posts[0].id, handleComments);
+};
+
+const handleUser = (error, user) => {
+  if (error) return console.error(error);
+
+  getPosts(user.id, handlePosts);
+};
+
+getUser(1, handleUser);
+```
+
+La logica sigue siendo asincrona con callbacks, pero ahora cada funcion tiene un nombre y una responsabilidad mas clara.
+
+### 3. Usar Promises
+
+Las `Promise` ayudan a encadenar operaciones sin anidar tantos bloques.
+
+Ejemplo conceptual:
+
+```js
+getUser(1)
+  .then(user => getPosts(user.id))
+  .then(posts => getComments(posts[0].id))
+  .then(comments => console.log(comments))
+  .catch(error => console.error(error));
+```
+
+Aqui el manejo de errores queda centralizado en `.catch`.
+
+### 4. Usar async / await
+
+`async` y `await` permiten escribir codigo asincrono con una apariencia mas secuencial.
+
+Ejemplo conceptual:
+
+```js
+try {
+  const user = await getUser(1);
+  const posts = await getPosts(user.id);
+  const comments = await getComments(posts[0].id);
+
+  console.log(comments);
+} catch (error) {
+  console.error(error);
+}
+```
+
+Este estilo suele ser mas facil de leer cuando hay varios pasos dependientes.
+
+## Regla practica
+
+Si tienes uno o dos callbacks, no hay problema.
+
+Si empiezas a ver muchos niveles de anidacion, conviene replantear la estructura.
+
+Pregunta util:
+
+```text
+Puedo leer este codigo de arriba a abajo sin perderme?
+```
+
+Si la respuesta es no, probablemente estas entrando en callback hell.
+
+## Resumen
+
+Callback hell no significa que los callbacks sean incorrectos.
+
+Significa que el flujo asincrono esta demasiado anidado.
+
+Para evitarlo:
+
+- Usa retornos tempranos.
+- Separa funciones con nombre.
+- Mantén funciones pequenas.
+- Usa Promises cuando necesites encadenar operaciones.
+- Usa async / await cuando quieras una lectura mas lineal.
