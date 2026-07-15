@@ -1,22 +1,48 @@
 
-
+import heroes from '../data/heroes.json';
 
 /**
- * 
- * 
- * @param {HTMLDivElement} element
+ * Componente de ejemplo para practicar callbacks.
+ *
+ * @param {HTMLDivElement} element Elemento HTML donde se mostrara el resultado.
  */
-export const callbacksComponent = (element) => {// element es el div del html
+export const callbacksComponent = (element) => {// Recibe el contenedor donde se renderizara el nombre del heroe.
 
     console.log('callbacks Component');
 
-    // callbacks son funciones que se ejecutan despues de que se ejecute una accion
+    const id= "5d86371fd55e2e2a30fe1ccb1";
+    
+    findHero(id, (error,hero) => {
+
+        if(error){
+            element.innerHTML = error;
+            return;
+        }
+
+        element.innerHTML = hero.name;
+
+        /* console.log(hero.name);
+        element.innerHTML = hero?.name || 'Heroe no encontrado'; */
+
+    })
 
     
 }   
 
+// Busca un heroe por id y entrega el resultado mediante un callback.
+/**
+ * @param {string} id Id del heroe que se quiere buscar.
+ * @param {(error:String|null,hero:Object|undefined)=>void} callback Funcion que recibe el heroe encontrado.
+ */
+const findHero =(id, callback) => {// El callback se ejecuta cuando termina la busqueda.
 
-const findHero =(id, callback) => {// el callback es una funcion que se ejecuta despues de que se ejecute la funcion findHero
-    const hero= heroes.find(hero => hero.id === id);// busca el heroe con el id que se pasa como parametro
+    const hero= heroes.find(hero => hero.id === id);// Busca en el array el heroe cuyo id coincida. 
+
+    if(!hero){
+        callback('No se encontro el heroe', null);
+        return;
+    }
+
+    callback(hero);// Entrega el heroe encontrado al callback.
     
 }
