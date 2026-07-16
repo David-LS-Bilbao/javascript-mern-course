@@ -2,7 +2,7 @@ import './style.css'
 import javascriptLogo from './assets/javascript.svg'
 import { enviromentsComponent } from './concepts/01-env';
 import { callbacksComponent } from './concepts/02-callbacks';
-
+import { promisesComponent } from './concepts/03-promesas';
 
 
 
@@ -54,4 +54,6 @@ const elemnt=document.querySelector('.card');//obtengo el div
 
 //enviromentsComponent(elemnt);//llamo a la función enviromentsComponent
 
-callbacksComponent(elemnt);//llamo a la función callbacksComponent
+//callbacksComponent(elemnt);//llamo a la función callbacksComponent
+
+promisesComponent(elemnt);//llamo a la función promisesComponent
