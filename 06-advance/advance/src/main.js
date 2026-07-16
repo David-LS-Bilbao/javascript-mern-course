@@ -8,7 +8,6 @@ import { promisesComponent } from './concepts/03-promesas';
 
 
 
-
 document.querySelector('#app').innerHTML = `
 <section id="center">
   <div class="hero">
