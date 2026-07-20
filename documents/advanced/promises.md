@@ -524,3 +524,7 @@ promise.then((message) => {
   console.log(message);
 });
 ```
+
+
+## video con ejemplo
+https://youtu.be/Q4gdU7xnius
