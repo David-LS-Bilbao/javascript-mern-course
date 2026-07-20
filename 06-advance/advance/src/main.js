@@ -4,6 +4,10 @@ import { enviromentsComponent } from './concepts/01-env';
 import { callbacksComponent } from './concepts/02-callbacks';
 import { promisesComponent } from './concepts/03-promesas';
 import { promiseRaceComponent } from './concepts/04-promises-race';
+import { asyncComponent } from './concepts/05-async';
+import { asyncAwaitComponent } from './concepts/06-async-await';
+import { asyncAwait2Component } from './concepts/07-async-await-2';
+import { forAwaitComponent } from './concepts/08-for-await';
 
 
 
@@ -58,4 +62,12 @@ const elemnt=document.querySelector('.card');//obtengo el div
 
 //promisesComponent(elemnt);//llamo a la función promisesComponent
 
-promiseRaceComponent(elemnt);//llamo a la función promiseRaceComponent
+//promiseRaceComponent(elemnt);//llamo a la función promiseRaceComponent
+
+//asyncComponent(elemnt);//llamo a la función asyncComponent
+
+//asyncAwaitComponent(elemnt);//llamo a la función asyncAwaitComponent
+
+//asyncAwait2Component(elemnt);//llamo a la función asyncAwait2Component
+
+forAwaitComponent(elemnt);//llamo a la función forAwaitComponent
