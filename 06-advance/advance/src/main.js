@@ -3,6 +3,7 @@ import javascriptLogo from './assets/javascript.svg'
 import { enviromentsComponent } from './concepts/01-env';
 import { callbacksComponent } from './concepts/02-callbacks';
 import { promisesComponent } from './concepts/03-promesas';
+import { promiseRaceComponent } from './concepts/04-promises-race';
 
 
 
@@ -55,4 +56,6 @@ const elemnt=document.querySelector('.card');//obtengo el div
 
 //callbacksComponent(elemnt);//llamo a la función callbacksComponent
 
-promisesComponent(elemnt);//llamo a la función promisesComponent
+//promisesComponent(elemnt);//llamo a la función promisesComponent
+
+promiseRaceComponent(elemnt);//llamo a la función promiseRaceComponent
