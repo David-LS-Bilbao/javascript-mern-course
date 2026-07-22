@@ -73,6 +73,28 @@ export const getPokemonByIdAction = async (id) => {
 };
 ```
 
+## Contrato de la action actual
+
+`getPokemonById(id)` devuelve una promesa con este objeto:
+
+```js
+{
+  id: number,
+  name: string,
+  weight: number,
+  image: string | null,
+}
+```
+
+La caché está declarada en el nivel del módulo, pero no se exporta. Por tanto:
+
+- Es compartida por todas las llamadas a esa action dentro de la misma página.
+- No es una variable global del navegador.
+- Se pierde al recargar la página.
+- El componente no puede modificarla directamente.
+
+La action guarda el objeto transformado, no la respuesta completa de PokéAPI.
+
 Uso desde el componente:
 
 ```js
@@ -145,4 +167,3 @@ get-pokemon-list-action.js
 ```
 
 Al finalizar el módulo revisaremos si todas estas actions son realmente necesarias o si algunas deben combinarse.
-

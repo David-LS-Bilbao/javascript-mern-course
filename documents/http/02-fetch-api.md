@@ -83,6 +83,23 @@ Esta action:
 
 El ejemplo es genérico y se adaptará al nombre y contrato finales del proyecto.
 
+## Contrato implementado en la aplicación
+
+La action actual reduce la respuesta de PokéAPI a los campos utilizados por la interfaz:
+
+```js
+const pokemonData = {
+  id: data.id,
+  name: data.name,
+  weight: data.weight,
+  image: data.sprites.front_default,
+};
+```
+
+Esta transformación evita que el componente dependa de toda la estructura externa. La propiedad `image` puede ser `null` si PokéAPI no dispone de ese sprite, por lo que la interfaz deberá contemplarlo.
+
+La implementación ya convierte el cuerpo mediante `response.json()`, pero todavía debe incorporar la validación de `response.ok` explicada en la sección anterior.
+
 ## Manejar errores
 
 ```js
@@ -158,4 +175,3 @@ Los detalles técnicos pueden registrarse para depuración, pero la interfaz deb
 - [Using the Fetch API — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
 - [`Response.ok` — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Response/ok)
 - [Endpoint Pokémon — PokéAPI](https://pokeapi.co/docs/v2#pokemon)
-

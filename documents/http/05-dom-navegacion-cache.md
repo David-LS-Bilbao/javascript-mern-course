@@ -69,6 +69,19 @@ nextButton.addEventListener('click', async () => {
 
 La navegación debería impedir identificadores inválidos y desactivar botones cuando no sea posible avanzar o retroceder.
 
+## Navegación implementada actualmente
+
+El componente comienza en el identificador `1` y permite navegar hasta el `151`. Este límite representa los Pokémon originales incluidos en la primera generación y es una decisión de interfaz, no un límite general del endpoint de PokéAPI.
+
+Cada listener:
+
+1. Comprueba el límite.
+2. Actualiza `pokemonId`.
+3. Solicita el Pokémon mediante la action.
+4. Renderiza el resultado.
+
+Actualmente, los botones siguen habilitados mientras se realiza la petición. Si se pulsa rápidamente varias veces, pueden existir peticiones simultáneas y respuestas fuera de orden. Este comportamiento se revisará cuando la lección incorpore estados de carga o cancelación.
+
 ## Evitar listeners duplicados
 
 Si se reconstruye todo el HTML en cada renderizado y se vuelven a registrar listeners, pueden aparecer eventos duplicados o referencias a elementos antiguos.
@@ -94,6 +107,14 @@ La estrategia final dependerá del alcance de la lección.
 ## Caché en memoria
 
 Una caché guarda resultados ya obtenidos para no repetir la misma petición.
+
+En la implementación actual, la caché vive dentro del módulo de la action:
+
+```js
+const pokemonCache = new Map();
+```
+
+Al volver a un Pokémon ya visitado, la action devuelve el objeto almacenado y omite `fetch`.
 
 ```js
 const pokemonCache = new Map();
@@ -184,4 +205,3 @@ Para esta aplicación didáctica puede ser suficiente. Si se necesitara persiste
 - [ ] La caché evita repetir peticiones completadas.
 - [ ] Los errores no quedan almacenados como respuestas válidas.
 - [ ] Los datos se renderizan de forma segura.
-

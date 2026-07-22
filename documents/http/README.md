@@ -37,9 +37,26 @@ La respuesta se valida y transforma desde JSON
 El componente renderiza los datos en el DOM
 ```
 
+## Estado actual de la implementación
+
+La aplicación ya incluye:
+
+- Una action para consultar Pokémon por identificador.
+- Transformación de la respuesta a `{ id, name, weight, image }`.
+- Caché privada del módulo mediante `Map`.
+- Navegación con botones entre los identificadores `1` y `151`.
+- Actualización del nombre y la imagen sin reconstruir los controles.
+
+Queda pendiente revisar durante las próximas lecciones:
+
+- Validación de `response.ok` antes de convertir el cuerpo.
+- Estados visuales de carga y error en cada navegación.
+- Desactivación de los botones en los límites y durante la carga.
+- Comportamiento ante varios clics rápidos.
+- Texto alternativo y estado cuando una imagen no está disponible.
+
 ## Referencias oficiales
 
 - [Using the Fetch API — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
 - [Documentación de PokéAPI](https://pokeapi.co/docs/v2)
 - [Enviar peticiones con Postman](https://learning.postman.com/docs/use/send-requests/requests)
-

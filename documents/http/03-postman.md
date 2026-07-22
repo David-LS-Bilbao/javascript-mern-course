@@ -43,6 +43,26 @@ types
 
 La estructura real debe comprobarse en la respuesta y en la documentación de PokéAPI antes de escribir el renderizado.
 
+## Campos usados actualmente por la action
+
+La implementación actual consume estos caminos de la respuesta:
+
+```text
+id
+name
+weight
+sprites.front_default
+```
+
+En Postman conviene comprobar que:
+
+- `id` es un número.
+- `name` es un texto.
+- `weight` es un número.
+- `sprites.front_default` contiene una URL o `null`.
+
+También debe probarse un identificador inexistente para observar el código y el cuerpo de error que la action tendrá que manejar.
+
 ## Casos mínimos de prueba
 
 | Caso | Petición | Resultado esperado |
@@ -121,4 +141,3 @@ Diagnóstico recomendado:
 - [Crear y enviar peticiones — Postman Docs](https://learning.postman.com/docs/use/send-requests/create-requests/request-basics)
 - [Trabajar con respuestas — Postman Docs](https://learning.postman.com/docs/use/send-requests/response-data/response-data)
 - [Inicio rápido de Postman](https://learning.postman.com/docs/getting-started/quick-start)
-
