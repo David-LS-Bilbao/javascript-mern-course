@@ -39,7 +39,8 @@ export const renderTable =(elemnt) =>{
         table =createTable();
         elemnt.append(table);
 
-        //TODO: listeners de la tabla
+        // añadir listeners de la tabla
+
     }
 
     let tableHTML= '';
@@ -62,6 +63,8 @@ export const renderTable =(elemnt) =>{
     });
 
     table.querySelector('tbody').innerHTML = tableHTML;
+
+
 
 }
 
