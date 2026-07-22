@@ -17,20 +17,31 @@ Esta carpeta contiene la documentación inicial y provisional de la sección CRU
 1. [Fundamentos de CRUD y API REST](./01-crud-y-rest.md)
 2. [Fundamentos de Clean Architecture](./02-clean-architecture.md)
 3. [Patrones de diseño básicos](./03-patrones-diseno.md)
-4. [Estructura inicial del módulo users](./04-estructura-users.md)
+4. [Estructura actual del módulo users](./04-estructura-users.md)
 
 ## Estado actual
 
-La estructura inicial contiene:
+La estructura implementada hasta este punto contiene:
 
 ```text
 src/users/
-├── mappers/
-├── models/
+├── mappers/localhost-user.mapper.js
+├── models/users.js
 ├── presentation/
-├── store/
-└── use-cases/
+│   ├── render-add-buttons/
+│   ├── render-buttons/
+│   └── render-table/
+├── store/users-store.js
+├── use-cases/load-user-by-page.js
+└── users-app.js
 ```
 
-Las carpetas todavía no contienen implementación. Sus responsabilidades definitivas se documentarán conforme avance la lección.
+Ya están implementados el modelo `User`, el mapper del backend, la lectura paginada, el store central, la tabla y los controles de navegación.
 
+Siguen pendientes:
+
+- Validar `response.ok` y representar errores o carga en la interfaz.
+- Crear, actualizar y eliminar usuarios.
+- Implementar el modal y conectar el botón flotante de alta.
+- Completar `onUserChanged` y `reloadPage` en el store.
+- Añadir los listeners de las acciones `Select` y `Delete` de la tabla.

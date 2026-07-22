@@ -3,7 +3,10 @@ import './render-buttons.css';
 import { renderTable } from '../render-table/render-table.js';
 
 
-/// Renderiza los botones de navegación
+/**
+ * Renderiza los controles de paginación y sincroniza la tabla tras cada carga.
+ * @param {HTMLElement} elemnnt Contenedor de los controles y de la tabla.
+ */
 export const renderButtons =(elemnnt) =>{
 
 
@@ -30,19 +33,18 @@ export const renderButtons =(elemnnt) =>{
         prevButton,
         currentPageLabel,
         nextButton
-    );// Agrega los botones al contenedor
+    );
 
 
     elemnnt.append(buttonsContainer);
 
 
-    // Listener de los botones
+    // Se espera la respuesta antes de actualizar el indicador y la tabla.
     nextButton.addEventListener('click',async () => {
         await userStore.loadNextPage();
 
         currentPageLabel.innerText = `${userStore.getCurrentPage()}`;
    
-        //recargamos la tabla con los nuevos usuarios
         renderTable(elemnnt);
 
         

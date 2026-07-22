@@ -6,6 +6,17 @@
 
 Un patrón es una solución reutilizable para un problema frecuente de organización o comunicación entre componentes. No es una librería ni una regla obligatoria.
 
+## Patrones presentes en el código actual
+
+- **ES Modules:** cada archivo importa únicamente sus dependencias y expone una API concreta.
+- **Modelo:** la clase `User` representa el formato interno de un usuario.
+- **Mapper:** `localhostUserToModel` adapta `first_name` y `last_name` a camelCase.
+- **Caso de uso:** `loadUsersByPage` expresa la operación de cargar una página.
+- **Store central:** `users-store.js` mantiene la página y los usuarios actuales en estado privado.
+- **Renderizado por componentes:** tabla, paginación y botón de alta se crean en módulos separados.
+
+Observer, Repository, una factory reutilizable y el modal todavía no están implementados. Permanecen documentados como opciones para las siguientes partes de la lección.
+
 ## Module Pattern mediante ES Modules
 
 Cada archivo puede exponer únicamente su API pública:
@@ -114,7 +125,7 @@ const userRepository = {
 };
 ```
 
-Puede ocultar si los datos vienen de Fetch API, memoria u otra fuente. Esta capa todavía no está identificada en la estructura actual y solo se añadirá si aporta claridad.
+Puede ocultar si los datos vienen de Fetch API, memoria u otra fuente. Esta capa todavía no existe: la petición se realiza directamente en `load-user-by-page.js` y solo se extraerá si aporta claridad.
 
 ## Factory para elementos
 
@@ -154,4 +165,3 @@ Antes de aplicar un patrón conviene preguntar:
 - ¿Es proporcional al tamaño del proyecto?
 
 Un patrón innecesario puede dificultar más el código de lo que ayuda.
-

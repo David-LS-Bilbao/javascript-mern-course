@@ -3,17 +3,19 @@
 
 
 /**
- * Clase que representa a un usuario.
- * @constructor 
- * @param {number} id - El ID del usuario.
- * @param {boolean} isActive - Indica si el usuario esta activo.
- * @param {number} balance - El saldo del usuario.
- * @param {string} avatar - La URL de la imagen del avatar del usuario.
- * @param {string} first_name - El nombre del usuario.
- * @param {string} last_name - El apellido del usuario.
- * @param {string} gender - El sexo del usuario.
+ * Representa un usuario con los nombres de propiedades usados por la aplicación.
  */
 export class User {
+    /**
+     * @param {object} user Datos normalizados del usuario.
+     * @param {number} user.id Identificador del usuario.
+     * @param {boolean} user.isActive Indica si el usuario está activo.
+     * @param {number} user.balance Saldo del usuario.
+     * @param {string} user.avatar URL del avatar.
+     * @param {string} user.firstName Nombre del usuario.
+     * @param {string} user.lastName Apellido del usuario.
+     * @param {string} user.gender Género del usuario.
+     */
     constructor({id,isActive,balance,avatar,firstName,lastName,gender}){
         this.id=id;
         this.isActive=isActive;

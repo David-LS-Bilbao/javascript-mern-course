@@ -45,7 +45,7 @@ Contiene detalles externos:
 - Formato JSON recibido.
 - Persistencia proporcionada por `json-server`.
 
-La estructura actual todavía no tiene una carpeta explícita para esta responsabilidad. Se decidirá cuando se implemente el acceso HTTP.
+La estructura actual todavía no tiene una carpeta explícita para esta responsabilidad. Por ahora, `load-user-by-page.js` realiza la petición HTTP y aplica el mapper; esta simplificación es válida para el alcance didáctico actual, aunque mezcla aplicación e infraestructura.
 
 ### Presentación
 
@@ -79,6 +79,19 @@ mapper
        ↓
 modelo User
 ```
+
+## Correspondencia con el código actual
+
+| Responsabilidad | Archivo actual |
+|---|---|
+| Modelo de dominio | `models/users.js` |
+| Adaptación del backend | `mappers/localhost-user.mapper.js` |
+| Lectura paginada | `use-cases/load-user-by-page.js` |
+| Estado central | `store/users-store.js` |
+| Componentes del DOM | `presentation/render-*/` |
+| Composición de la pantalla | `users-app.js` |
+
+La separación no es una Clean Architecture estricta: el caso de uso conoce `fetch` y la variable de entorno. Si el acceso a datos crece, podrá extraerse a una action o repositorio sin cambiar el modelo ni la presentación.
 
 ## Separar responsabilidades
 
@@ -134,4 +147,3 @@ Para este proyecto didáctico se aplicará una versión sencilla:
 - ¿Los casos de uso pueden ejecutarse sin conocer elementos HTML?
 - ¿Las URLs están centralizadas?
 - ¿Los errores llegan a la capa que puede mostrarlos correctamente?
-

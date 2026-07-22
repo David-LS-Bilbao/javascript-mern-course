@@ -1,123 +1,103 @@
-# Estructura inicial del módulo users
+# Estructura actual del módulo users
 
-> Documento provisional basado en las carpetas existentes antes de implementar sus archivos.
+> Documento provisional actualizado con la implementación existente. Se completará conforme avancen las operaciones CRUD.
 
 ## Árbol actual
 
 ```text
 src/users/
 ├── mappers/
+│   └── localhost-user.mapper.js
 ├── models/
+│   └── users.js
 ├── presentation/
+│   ├── render-add-buttons/
+│   │   ├── render-add-button.css
+│   │   └── render-add-button.js
+│   ├── render-buttons/
+│   │   ├── render-buttons.css
+│   │   └── render-buttons.js
+│   └── render-table/
+│       ├── render-table.css
+│       └── render-table.js
 ├── store/
-└── use-cases/
+│   └── users-store.js
+├── use-cases/
+│   └── load-user-by-page.js
+└── users-app.js
 ```
 
-## `models`
+## Flujo implementado
 
-Responsabilidad prevista:
+```text
+UsersApp
+   ↓
+userStore.loadNextPage()
+   ↓
+loadUsersByPage(page)
+   ↓
+Fetch API → localhostUserToModel() → User[]
+   ↓
+state.users
+   ↓
+renderTable() + renderButtons() + renderAddButton()
+```
 
-- Representar un usuario dentro de la aplicación.
-- Normalizar valores iniciales.
-- Definir propiedades y tipos esperados.
-- Mantener reglas propias del modelo, si aparecen.
+Los botones de paginación esperan la carga del store, actualizan el número de página y vuelven a renderizar el cuerpo de la tabla.
 
-No debería realizar peticiones HTTP ni manipular el DOM.
+## `models/users.js`
 
-## `mappers`
+Define la clase `User`, que usa nombres camelCase como `firstName` y `lastName`. No conoce el DOM, Fetch API ni el formato `snake_case` del backend.
 
-Responsabilidad prevista:
+## `mappers/localhost-user.mapper.js`
 
-- Convertir el JSON del backend a un modelo interno.
-- Convertir el modelo al formato requerido por el backend.
-- Normalizar nombres como `first_name` y `firstName`.
-- Convertir números y booleanos de forma explícita.
+Convierte cada objeto recibido desde json-server en una instancia de `User`. El mapper evita que el formato externo se propague al store y a la presentación.
 
-## `use-cases`
+Actualmente adapta los nombres de las propiedades; no aplica validación ni conversión adicional de tipos.
 
-Responsabilidad prevista:
+## `use-cases/load-user-by-page.js`
 
-- Listar usuarios.
-- Obtener un usuario.
-- Crear un usuario.
-- Actualizar un usuario.
-- Eliminar un usuario.
+Construye la URL paginada con `VITE_BASE_URL`, realiza la petición y transforma la respuesta mediante el mapper.
 
-Los casos de uso coordinan acciones, pero no deberían conocer botones o modales concretos.
+En esta fase concentra tanto el caso de uso como el acceso HTTP. Si aparecen más operaciones o backends, la petición podrá extraerse a una action o repositorio.
 
-## `store`
+## `store/users-store.js`
 
-Responsabilidad prevista:
+Mantiene un estado privado con:
 
-- Mantener la lista actual de usuarios.
-- Conservar el usuario seleccionado.
-- Representar carga y errores si el diseño final lo necesita.
-- Exponer actualizaciones controladas.
-- Notificar cambios a la presentación si se implementan suscripciones.
+- `currentPage`: página cargada actualmente.
+- `users`: modelos mostrados en la tabla.
+
+`loadNextPage` evita avanzar cuando recibe una página vacía y `loadPreviousPage` impide bajar de la página 1. El getter de usuarios devuelve una copia superficial del array.
+
+`onUserChanged` y `reloadPage` son puntos de extensión pendientes y todavía lanzan `Not implemented`.
 
 ## `presentation`
 
-Responsabilidad prevista:
+La presentación está dividida por componentes:
 
-- Crear la tabla o lista de usuarios.
-- Crear botones de acciones.
-- Registrar listeners.
-- Mostrar formularios y modales.
-- Renderizar carga, errores y estado vacío.
-- Delegar las operaciones CRUD a los casos de uso.
+- `render-table` crea una tabla una sola vez y sustituye su `tbody` al cambiar los datos.
+- `render-buttons` crea la navegación anterior/siguiente y registra sus listeners.
+- `render-add-buttons` crea el botón flotante de alta; la apertura del modal está pendiente.
 
-## Acceso HTTP pendiente
+Las acciones `Select` y `Delete` se muestran en cada fila, pero todavía no están conectadas a casos de uso.
 
-Todavía no existe una carpeta o módulo explícito para las peticiones al backend.
+## `users-app.js`
 
-Antes de implementarlo deberá decidirse si:
+Es el punto de composición del módulo: carga la primera página, limpia el contenedor y monta los tres componentes visuales.
 
-- Cada caso de uso utiliza una action HTTP pequeña.
-- Se crea un repositorio de usuarios.
-- Se crea un cliente HTTP compartido.
+## Pendientes identificados
 
-No es necesario aplicar todas las opciones. Debe elegirse la alternativa más clara para el alcance de la lección.
+- Validar `response.ok` antes de procesar el JSON.
+- Mostrar estados de carga, error y lista vacía.
+- Implementar Create, Update y Delete.
+- Crear el modal y sus conversiones de formulario.
+- Completar la recarga del store después de una modificación.
+- Registrar los listeners de selección y eliminación.
+- Decidir si el acceso HTTP necesita una action o repositorio independiente.
 
-## Dependencias recomendadas
+## Regla de dependencias usada
 
-```text
-presentation
-    ↓
-use-cases
-    ↓
-models / acceso a datos
-    ↓
-mappers
-```
+La presentación consulta y actualiza el store. El store ejecuta el caso de uso de carga, y este produce modelos mediante el mapper. El modelo permanece independiente de los detalles externos.
 
-El store puede ser actualizado por los casos de uso o por un coordinador de aplicación, según el patrón que se adopte durante la lección.
-
-## Convenciones iniciales
-
-- Un archivo debe tener una responsabilidad principal.
-- Los nombres deben indicar claramente la operación realizada.
-- Las funciones exportadas deben tener JSDoc cuando su contrato no sea evidente.
-- Las conversiones deben ser explícitas.
-- Las respuestas HTTP deben validarse antes de usarse.
-- Los errores no deben ocultarse silenciosamente.
-- La presentación no debe conocer el formato completo del backend.
-
-## Posibles nombres de archivos
-
-Estos nombres son orientativos y no obligatorios:
-
-```text
-models/user.js
-mappers/user.mapper.js
-use-cases/load-users.js
-use-cases/create-user.js
-use-cases/update-user.js
-use-cases/delete-user.js
-store/user.store.js
-presentation/users-app.js
-presentation/render-users.js
-presentation/user-modal.js
-```
-
-La lista se corregirá cuando existan los archivos reales.
-
+La estructura es intencionadamente sencilla: se añadirán nuevas capas solo cuando una responsabilidad real lo justifique.

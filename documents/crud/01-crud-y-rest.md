@@ -30,6 +30,18 @@ DELETE http://localhost:3001/users/1
 
 `json-server` modifica `server/db.json` cuando se crean, actualizan o eliminan recursos.
 
+## Estado de implementación
+
+Actualmente está implementada la lectura paginada mediante:
+
+```text
+GET http://localhost:3001/users?_page=1
+```
+
+La URL base se obtiene de `VITE_BASE_URL`. La respuesta se transforma con un mapper antes de guardarse en el store y mostrarse en la tabla.
+
+Todavía están pendientes `POST`, `PUT` o `PATCH`, `DELETE` y la comprobación de `response.ok` en el caso de uso real. Los ejemplos siguientes explican esas operaciones, pero no implican que ya estén conectadas a la interfaz.
+
 ## Create
 
 Para crear un usuario se envía una petición `POST` con los datos en el cuerpo:
@@ -154,4 +166,3 @@ Actualizar store
       ↓
 Renderizar el nuevo estado
 ```
-

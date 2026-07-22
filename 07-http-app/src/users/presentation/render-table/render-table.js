@@ -1,9 +1,13 @@
 import './render-table.css';
 import userStore from '../../store/users-store.js';
+
+// Conserva una única tabla y actualiza solamente su cuerpo en cada renderizado.
 let table;
 
-// creamos una tabla para mostrar los usuarios en HTML
-
+/**
+ * Crea la estructura base de la tabla de usuarios.
+ * @returns {HTMLTableElement}
+ */
 const createTable = () =>{
 
     const table = document.createElement('table');
@@ -31,6 +35,10 @@ const createTable = () =>{
 }
 
 
+/**
+ * Representa en la tabla los usuarios de la página guardada en el store.
+ * @param {HTMLElement} elemnt Contenedor en el que se monta la tabla la primera vez.
+ */
 export const renderTable =(elemnt) =>{
 
     const users = userStore.getUser();
@@ -38,8 +46,6 @@ export const renderTable =(elemnt) =>{
     if(!table){
         table =createTable();
         elemnt.append(table);
-
-        // añadir listeners de la tabla
 
     }
 
@@ -62,8 +68,9 @@ export const renderTable =(elemnt) =>{
         `;
     });
 
-    table.querySelector('tbody').innerHTML = tableHTML;
 
+    // Sustituye las filas anteriores sin volver a crear encabezados ni listeners externos.
+    table.querySelector('tbody').innerHTML = tableHTML;
 
 
 }
